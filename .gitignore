@@ -13,4 +13,5 @@ _deps
 /build
 /devel
 .catkin_workspace
+*/cmake-build-debug
 
