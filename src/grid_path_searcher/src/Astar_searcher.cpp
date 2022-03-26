@@ -181,10 +181,21 @@ double AstarPathFinder::getHeu(GridNodePtr node1, GridNodePtr node2, Vector3d st
     *
     */
     auto dist_vec = node1->coord - node2->coord;
+    // Multiple heuristic functions make it easy to shift.
+    // Euclidean distance
     double heu_euc = dist_vec.norm();
-    double tie_breaker_offset = abs(dist_vec.cross(start2end).norm()) * 1e-5;
+    // Manhattan distance
+    double heu_manh = (node1->index - node2->index).lpNorm<1>() * resolution;
+    // compute diagonal heuristic
+    Vector3i idx_diff = Vector3i((node2->index - node1->index).cwiseAbs());
+    sort(idx_diff.data(), idx_diff.data() + idx_diff.size());
+    double heu_diag = sqrt(3) * idx_diff(0) + sqrt(2) * (idx_diff(1)-idx_diff(0)) + (idx_diff(2)-idx_diff(1));
+    heu_diag = heu_diag*resolution;
+    double tie_breaker_offset = abs(dist_vec.cross(start2end).norm())/GLXYZ_SIZE;
 
-    return heu_euc;
+    // determine which one to use
+    auto heu_val = heu_euc + tie_breaker_offset;
+    return heu_val;
 }
 
 void AstarPathFinder::AstarGraphSearch(Vector3d start_pt, Vector3d end_pt)
