@@ -23,11 +23,15 @@ Following pictures demonstrated that when obstacles step in the path from start 
 
 ![](./euclidean_path.png)
 A\* using Euclidean Heuristic finds the optimal path
+
+
 ![](./euclidean_visited.png)
 A\* using Euclidean Heuristic finds the optimal path searched 5317 grids
 
 
 ![](./manhattan_path.png)
 A\* using Manhattan Heuristic finds the suboptimal path
+
+
 ![](./manhattan_visited.png)
 A\* using Manhattan Heuristic finds the suboptimal path searched 2384 grids
